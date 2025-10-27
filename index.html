@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Obodov Shixnazar</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-switcher.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    
+    <!-- Alternate Styles -->
+    <link rel="stylesheet" href="color-1.css" class="alternate-style" title="color-1">
+    <link rel="stylesheet" href="color-2.css" class="alternate-style" title="color-2" disabled>
+    <link rel="stylesheet" href="color-3.css" class="alternate-style" title="color-3" disabled>
+    <link rel="stylesheet" href="color-4.css" class="alternate-style" title="color-4" disabled>
+    <link rel="stylesheet" href="color-5.css" class="alternate-style" title="color-5" disabled>
+
+<style>
+  /* Explosion styles */
+  .explosion-logo {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    user-select: none;
+    z-index: 99999;
+    animation: fly 2s ease-out forwards;
+  }
+
+  @keyframes fly {
+    0% {
+      transform: translate(0, 0) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--dx), var(--dy)) scale(0.5) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  .explosion-center {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #ff7300, #ff0000);
+    box-shadow: 0 0 30px #ff4500;
+    pointer-events: none;
+    z-index: 99998;
+    animation: blast 0.4s ease-out forwards;
+  }
+
+  @keyframes blast {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+
+  /* Flag icons */
+  .flag-icon {
+    width: 20px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+  }
+</style>
+
+</head>
+<body>
+    <script>
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+
+  const response = await fetch("http://localhost:3000/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+
+  if (result.success) {
+    alert("✅ Xabar yuborildi! Tez orada siz bilan bog‘lanaman.");
+    e.target.reset();
+  } else {
+    alert("❌ Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.");
+  }
+});
+</script>
+
+   <!-- Explosion script -->
+   <script>
+  const logos = [
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/yarn/yarn-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webpack/webpack-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg",
+    
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+  ];
+
+  window.addEventListener("click", (event) => {
+    const blast = document.createElement("div");
+    blast.className = "explosion-center";
+    blast.style.left = `${event.clientX - 10}px`;
+    blast.style.top = `${event.clientY - 10}px`;
+    document.body.appendChild(blast);
+    setTimeout(() => blast.remove(), 400);
+
+    for (let i = 0; i < 10; i++) {
+      const img = document.createElement("img");
+      img.src = logos[Math.floor(Math.random() * logos.length)];
+      img.className = "explosion-logo";
+      img.style.left = `${event.clientX - 25}px`;
+      img.style.top = `${event.clientY - 25}px`;
+
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 150 + Math.random() * 150;
+      const dx = Math.cos(angle) * distance + "px";
+      const dy = Math.sin(angle) * distance + "px";
+      img.style.setProperty("--dx", dx);
+      img.style.setProperty("--dy", dy);
+
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 2000);
+    }
+  });
+</script>
+
+    <!-- Asosiy tarkib -->
+    <div class="main-container">
+        <div class="aside">
+            <div class="logo">
+                <a href="#"><span>S</span>hixnazar</a>
+            </div>
+            <div class="nav-toggler">
+                <span></span>
+            </div>
+            <ul class="nav">
+                <li><a href="#home" data-key="home"><i class="fa fa-home"></i><span class="translatable" data-key="home">Home</span></a></li>
+                <li><a href="#about" data-key="about"><i class="fa fa-user"></i><span class="translatable" data-key="about">About</span></a></li>
+                <li><a href="#services" data-key="services"><i class="fa fa-list"></i><span class="translatable" data-key="services">Services</span></a></li>
+                <li><a href="#portfolio" data-key="portfolio"><i class="fa fa-briefcase"></i><span class="translatable" data-key="portfolio">Portfolio</span></a></li>
+                <li><a href="#contact" data-key="contact"><i class="fa fa-comments"></i><span class="translatable" data-key="contact">Contact</span></a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <!-- Home Section -->
+            <section class="home section" id="home">
+                <div class="container">
+                    <div class="row">
+                        <div class="home-info padd-15">
+                            <h3 class="hello translatable" data-key="hello">Hello my name is <span class="name">Avezov shixnazar</span></h3>
+                            <h3 class="my-profession translatable" data-key="iam">I am a <span class="typing">web designer</span></h3>
+                            <p class="translatable" data-key="homeDesc">I'm a passionate web developer with expertise in modern web technologies. I create responsive and user-friendly websites that deliver exceptional user experiences.</p>
+                            <a href="#contact" class="btn hire-me translatable" data-key="hireMe">Hire Me</a>
+                        </div>
+                        <div class="home-img padd-15">
+                            <img src="ustoz.jpg" alt="Obodov Shixnazar">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="about section" id="about">
+                <div class="container">
+                    <div class="row">
+                        <div class="section-title padd-15">
+                            <h2 class="translatable" data-key="about">About Me</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="about-content">
+                            <div class="row">
+                                <div class="about-text padd-15">
+                                    <h3 class="translatable" data-key="aboutTitle">I'm  and <span>Web Developer</span></h3>
+                                    <p class="translatable" data-key="aboutDesc">I am a dedicated web developer with over 3 years of experience in creating dynamic and responsive websites. My passion lies in crafting clean, efficient code and delivering solutions that exceed client expectations.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="personal-info padd-15">
+                                    <div class="row">
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="birthday">Birthday: <span>15 March 1995</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="age">Age: <span>29</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="website">Website: <span>www.shixnazar.dev</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="email">Email: <span>shixnazar@email.com</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="degree">Degree: <span>Computer Science</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="phone">Phone: <span>+998 90 123 45 67</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="city">City: <span>Khiva, Uzbekistan</span></p>
+                                        </div>
+                                        <div class="info-item padd-15">
+                                            <p class="translatable" data-key="freelance">Freelance: <span>Available</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="buttons padd-15">
+                                            <a href="#" class="btn translatable" data-key="downloadCV">Download CV</a>
+                                            <a href="#contact" class="btn hire-me translatable" data-key="hireMe">Hire Me</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                    <div class="skills padd-15">
+                        <h3 class="title translatable" data-key="skills">Skills</h3>
+                        <div class="row">
+                            <div class="skill-item padd-15">
+                                <h5>HTML      </h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 95%;"></div>
+                                    <div class="skill-percent">95%</div>
+                                </div>
+                            </div>
+                            <div class="skill-item padd-15">
+                                <h5>CSS</h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 90%;"></div>
+                                    <div class="skill-percent">90%</div>
+                                </div>
+                            </div>
+                            <div class="skill-item padd-15">
+                                <h5>JavaScript</h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 85%;"></div>
+                                    <div class="skill-percent">85%</div>
+                                </div>
+                            </div>
+                            <div class="skill-item padd-15">
+                                <h5>React</h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 80%;"></div>
+                                    <div class="skill-percent">80%</div>
+                                </div>
+                            </div>
+                            <div class="skill-item padd-15">
+                                <h5>Node.js</h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 75%;"></div>
+                                    <div class="skill-percent">75%</div>
+                                </div>
+                            </div>
+                            <div class="skill-item padd-15">
+                                <h5>PHP</h5>
+                                <div class="progress">
+                                    <div class="progress-in" style="width: 70%;"></div>
+                                    <div class="skill-percent">70%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+                            <div class="row">
+                                <div class="education padd-15">
+                                    <h3 class="title translatable" data-key="education">Education</h3>
+                                    <div class="row">
+                                        <div class="timeline-box padd-15">
+                                            <div class="timeline shadow-dark">
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2018-2022
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="bachelor">Bachelor in Computer Science</h4>
+                                                    <p class="timeline-text translatable" data-key="bachelorDesc">Graduated with honors from Tashkent University of Information Technologies. Specialized in web development and software engineering.</p>
+                                                </div>
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2022-2023
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="frontend">Frontend Development Course</h4>
+                                                    <p class="timeline-text translatable" data-key="frontendDesc">Completed advanced frontend development course focusing on React, Vue.js, and modern JavaScript frameworks.</p>
+                                                </div>
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2023-Present
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="uiux">UI/UX Design Specialization</h4>
+                                                    <p class="timeline-text translatable" data-key="uiuxDesc">Currently enhancing skills in user interface and user experience design to create more intuitive web applications.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="experience padd-15">
+                                    <h3 class="title translatable" data-key="experience">Experience</h3>
+                                    <div class="row">
+                                        <div class="timeline-box padd-15">
+                                            <div class="timeline shadow-dark">
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2022-2023
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="junior">Junior Web Developer</h4>
+                                                    <p class="timeline-text translatable" data-key="juniorDesc">Worked at TechSolutions Inc. developing responsive websites and web applications using HTML, CSS, JavaScript and React.</p>
+                                                </div>
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2023-2024
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="frontendDev">Frontend Developer</h4>
+                                                    <p class="timeline-text translatable" data-key="frontendDevDesc">Advanced to Frontend Developer role at DigitalCreations, leading projects and mentoring junior developers.</p>
+                                                </div>
+                                                <div class="timeline-item">
+                                                    <div class="circle-dot"></div>
+                                                    <h3 class="timeline-date">
+                                                        <i class="fa fa-calendar"></i> 2024-Present
+                                                    </h3>
+                                                    <h4 class="timeline-title translatable" data-key="fullstack">Full Stack Developer</h4>
+                                                    <p class="timeline-text translatable" data-key="fullstackDesc">Currently working as a Full Stack Developer at InnovateTech, handling both frontend and backend development.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section class="service section" id="services">
+                <div class="container">
+                    <div class="row">
+                        <div class="section-title padd-15">
+                            <h2 class="translatable" data-key="services">Services</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-laptop-code"></i>
+                                </div>
+                                <h4 class="translatable" data-key="webDev">Web Development</h4>
+                                <p class="translatable" data-key="webDevDesc">Custom website development using modern technologies like React, Vue.js, and Node.js for optimal performance.</p>
+                            </div>
+                        </div>
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-mobile-alt"></i>
+                                </div>
+                                <h4 class="translatable" data-key="responsive">Responsive Design</h4>
+                                <p class="translatable" data-key="responsiveDesc">Creating mobile-first, responsive designs that work perfectly on all devices and screen sizes.</p>
+                            </div>
+                        </div>
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-palette"></i>
+                                </div>
+                                <h4 class="translatable" data-key="uiuxDesign">UI/UX Design</h4>
+                                <p class="translatable" data-key="uiuxDesignDesc">Designing intuitive user interfaces and experiences that engage users and drive conversions.</p>
+                            </div>
+                        </div>
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-code"></i>
+                                </div>
+                                <h4 class="translatable" data-key="cleanCode">Clean Code</h4>
+                                <p class="translatable" data-key="cleanCodeDesc">Writing clean, maintainable, and efficient code following best practices and industry standards.</p>
+                            </div>
+                        </div>
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <h4 class="translatable" data-key="seo">SEO Optimization</h4>
+                                <p class="translatable" data-key="seoDesc">Optimizing websites for search engines to improve visibility and drive organic traffic.</p>
+                            </div>
+                        </div>
+                        <div class="service-item padd-15">
+                            <div class="service-item-inner">
+                                <div class="icon">
+                                    <i class="fa fa-bullhorn"></i>
+                                </div>
+                                <h4 class="translatable" data-key="digital">Digital Marketing</h4>
+                                <p class="translatable" data-key="digitalDesc">Implementing digital marketing strategies to increase online presence and business growth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section class="portfolio section" id="portfolio">
+                <div class="container">
+                    <div class="row">
+                        <div class="section-title padd-15">
+                            <h2 class="translatable" data-key="portfolio">Portfolio</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="portfolio-heading padd-15">
+                            <h2 class="translatable" data-key="lastProjects">My Last Projects:</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="E-commerce Website">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="ecommerce">E-commerce Platform</h4>
+                                    <p>React, Node.js, MongoDB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="Travel Blog">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="travel">Travel Blog</h4>
+                                    <p>Vue.js, WordPress, PHP</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="Business Dashboard">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="dashboard">Business Dashboard</h4>
+                                    <p>Angular, TypeScript, Firebase</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="Mobile App">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="fitness">Fitness Mobile App</h4>
+                                    <p>React Native, Redux, API</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="Portfolio Website">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="artist">Artist Portfolio</h4>
+                                    <p>HTML, CSS, JavaScript</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-item padd-15">
+                            <div class="portfolio-item-inner shadow-dark">
+                                <div class="portfolio-img">
+                                    <img src="5.jfif" alt="Restaurant Website">
+                                </div>
+                                <div class="portfolio-info">
+                                    <h4 class="translatable" data-key="restaurant">Restaurant Website</h4>
+                                    <p>WordPress, PHP, MySQL</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact section" id="contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="section-title padd-15">
+                            <h2 class="translatable" data-key="contact">Contact Me</h2>
+                        </div>
+                    </div>
+                    <h3 class="contact-title padd-15 translatable" data-key="anyQuestions">Have You Any Questions?</h3>
+                    <h4 class="contact-sub-title padd-15 translatable" data-key="atYourService">I Am At Your Services</h4>
+                    <div class="row">
+                        <div class="contact-info-item padd-15">
+                            <div class="icon"><i class="fa fa-phone"></i></div>
+                            <h4 class="translatable" data-key="callUs">Call Us On</h4>
+                            <p>+998 90 123 45 67</p>
+                        </div>
+                        <div class="contact-info-item padd-15">
+                            <div class="icon"><i class="fa fa-map-marker-alt"></i></div>
+                            <h4 class="translatable" data-key="office">Office</h4>
+                            <p>IT Park Khiva</p>
+                        </div>
+                        <div class="contact-info-item padd-15">
+                            <div class="icon"><i class="fa fa-envelope"></i></div>
+                            <h4 class="translatable" data-key="email">Email</h4>
+                            <p>Shixnazar@email.com</p>
+                        </div>
+                        <div class="contact-info-item padd-15">
+                            <div class="icon"><i class="fa fa-globe-europe"></i></div>
+                            <h4 class="translatable" data-key="website">Website</h4>
+                            <p>www.shixnazar.dev</p>
+                        </div>
+                    </div>
+                    <h3 class="contact-title padd-15 translatable" data-key="sendEmail">SEND ME AN EMAIL</h3>
+                    <h4 class="contact-sub-title padd-15 translatable" data-key="responsiveMsg">I'M VERY RESPONSIVE TO MESSAGES</h4>
+                    <div class="contact-form padd-15">
+  <form id="contactForm">
+    <div class="row">
+      <div class="form-item col-6 padd-15">
+        <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Name" required>
+        </div>
+      </div>
+      <div class="form-item col-6 padd-15">
+        <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Email" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-item col-12 padd-15">
+        <div class="form-group">
+          <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-item col-12 padd-15">
+        <div class="form-group">
+          <textarea name="message" class="form-control" placeholder="Message" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-item col-12 padd-15">
+        <button type="submit" onclick="sendMessageToTelegram()" class="btn">Send Message</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="server.js"></script>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Style Switcher -->
+    <div class="style-switcher">
+        <div class="style-switcher-toggler s-icon">
+            <i class="fas fa-cog fa-spin"></i>
+        </div>
+        <div class="day-night s-icon">
+            <i class="fas fa-moon"></i>
+        </div>
+        <h4 class="translatable" data-key="themeColors">Theme Colors</h4>
+        <div class="colors">
+            <span class="color-1 active" onclick="setActiveStyle('color-1')"></span>
+            <span class="color-2" onclick="setActiveStyle('color-2')"></span>
+            <span class="color-3" onclick="setActiveStyle('color-3')"></span>
+            <span class="color-4" onclick="setActiveStyle('color-4')"></span>
+            <span class="color-5" onclick="setActiveStyle('color-5')"></span>
+        </div>
+        <h4 class="translatable" data-key="languages">Languages</h4>
+        <div class="languages">
+            <span class="lang-option active" onclick="changeLanguage('uz')">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAdVBMVEX///8etToAmbXOESbKAAD++PocjKfXABLWACUxpTgbtzoAl7QAmLUAkrAAlLEAkbC/4OiPyNbq9vjz+vvf8PSAwtIAjKw9p7+bzttwu80UnrjI5Ou12+TQ6O6t1+FZssdouMsupLxDrMJas8eg1N9uvc+Jw9MHqo32AAAE1klEQVR4nO2cC5eiOBBGa9nnTJGEpyLKU6f//09cFJXQ2yKeorc1/d0zZ87JAGm5BqpSyTR5QAB99Qd4baBPBPSJgD4Rs/Uxa620Xuan+st08/XM08dKt+mh3AZhM6/b9bjZ8qjZ5K74m6OPVR3ERBRn63m37atC+XZz2/DQ9nUaakf8zdBnNlHnjqJazXx0c6+ltvv72mQKtXVUbQs1HH5p7urTTXGUR6Hie6dershOF2Tn87k+jlzaXg43yenLWN+6/KW4p09tTi7itZrfp153VzTXC9jvhKVm6HJHFMz+Mp6bO/pUP5IS75G75YYSsmKMoYjehqdXBRRvH/g2nplpfWd70WP5is42q7S8XsN1adZbq4ui++NI7J3Up89P7kNjryNnT1uhIdejDrqjo8OvzKS+5mSP9gslyw4ypc/0MTcwE+d8cyb08b4ffP/fh3k9JuSYU4JGpSNB8lO4rY/bfvDNnOV+T27r07s+5cObb4Lb+kzcT9aWCLtuJHkfcFvfOWtp5+V8+VTTnzz6ytzUx/U57s4bOeVokKrdKN7octQL1xs3ZrwT+vT8+ZqvTRqthiKANjnlZpi0qVWUmqHCp1a77cqRcH5bX9nru3+ffh4UMRXJr0uF6pAklCSHS/NXUlCcBJdZ7rrosvGiaKWf/ClYQF9nKOgmxtV1uKnwVB+89lR1QSi4jk3Ou3wyadx4fBfRp7v3ZLKyeyWyHvpVRFRbBauu553zD2/YV1vm5C2qCHOrfKyzgIMh4eE2ykOrwMdRVc3q9gVYJvKuNXM1NFvlqdZqMuuh6Tc5c964kQrezvvyh/K+BziK892wN6FPRcvNOpxlYs7bx47EkZf85zCj4uJGivE5TNT7VF/vcyXH+BSmqs1VP/zcmeAvz+Rax/akb4uK300mVzLOucvmg+DL7zKPdy9IPdl8dOHzeZnUd3l8/xs9eF+N/22c3+h3zWx0Mle1K/7u7DJIP1wnZ2122VCR8rWqE6OHooBm8uzmKrF3Z2mTlcaRbPLeHpfzPoPcvl2uDmEcheV5luvnWVhQmF1qoBxmJZVZeDl7k4VUhIdLBGqzMI7DQ7vcPXwhd3dYVf2SR2Xvd9Tp6JXI7fGcod6cH5fXi2vAPuXf8XXy11+cujH87i6Cs9fH35KtHaHm0M3mhoCsu3dkYRWsTHe+1Vx1OodqoGdCosyRZHLO7tLqtFkjDvlaj1dxVlqVQB0UGys95DSuY2s5I6dNEVj1vuiQxd9Hn8cqz04zkO3m7KipldoMNSdOjV7vh1iRsvbSoblvtBma/vHi2pHF95k7WLTK27esPLydb5vHmR97o1xuuumzO4nf/A1ArDtcue2lwP4pEdAnAvpEQJ8I+gsIoL+BAPodCKA/gAD6EwggAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHhSvvr/Y782+F0GIvCbNETQP0AA/QAC6CcQQL8BAdAnAvpEQJ8I6BMBfSKgTwT0iYA+EdAnAvpEQJ8I6BMBfSKgTwT0iYA+EdAnAvpEQJ8I6BMBfSKgTwT0iYA+EdAnAvpEQJ8I6BMBfSKgTwT0iYA+EdAnAvpEQJ8I6BMBfSKgTwT0iYA+EdAnAvpEQJ8I6BMBfSKgTwT0iYA+Ef8CLAI1Nd9GNq4AAAAASUVORK5CYII=" class="flag-icon">
+                <span>O'zbek</span>
+            </span>
+            <span class="lang-option" onclick="changeLanguage('en')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgdmlld0JveD0iMCAwIDY0MCA0ODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iNDgwIiBmaWxsPSIjMDEyMTY5Ii8+CjxwYXRoIGQ9Ik0yNjEuMyAyNDBIMzg3LjdMMzI0LjUgMzYzLjhWMjQwWiIgZmlsbD0id2hpdGUiIHRyYW5zZm9ybT0icm90YXRlKDkwIDI2MS4zIDI0MCkiLz4KPHBhdGggZD0iTTI2MS4zIDI0MEgzODcuN0wzMjQuNSAxMTYuMlYyNDBaIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMzg3LjcgMjQwKSIvPgo8cGF0aCBkPSJNMzI0LjUgMjQwVjExNi4yTDI2MS4zIDI0MEgzMjQuNVoiIGZpbGw9IndoaXRlIiB0cmFuc2Zvcm09InJvdGF0ZSg5MCAzMjQuNSAxMTYuMikiLz4KPHBhdGggZD0iTTMyNC41IDI0MFYzNjMuOEwzODcuNyAyNDBIMzI0LjVaIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJyb3RhdGUoOTAgMzI0LjUgMzYzLjgpIi8+CjxyZWN0IHg9IjI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI0ODAiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHk9IjI0MCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHg9IjI3My4zIiB3aWR0aD0iOTMuNCIgaGVpZ2h0PSI0ODAiIGZpbGw9IiNjYTAwMTYiLz4KPHJlY3QgeT0iMjczLjMiIHdpZHRoPSI2NDAiIGhlaWdodD0iOTMuNCIgZmlsbD0iI2NhMDAxNiIvPgo8L3N2Zz4K" class="flag-icon">
+                <span>English</span>
+            </span>
+            <span class="lang-option" onclick="changeLanguage('ru')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgdmlld0JveD0iMCAwIDY0MCA0ODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2NDAiIGhlaWdodD0iMTYwIiBmaWxsPSJ3aGl0ZSIvPgo8cmVjdCB5PSIxNjAiIHdpZHRoPSI2NDAiIGhlaWdodD0iMTYwIiBmaWxsPSIjZDAwIi8+CjxyZWN0IHk9IjMyMCIgd2lkdGg9IjY0MCIgaGVpZ2h0PSIxNjAiIGZpbGw9IiMwMDM1YTgiLz4KPC9zdmc+Cg==" class="flag-icon">
+                <span>Русский</span>
+            </span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
